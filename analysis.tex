@@ -23,26 +23,28 @@ The roll decay equation can be expressed as a linear regression with
 \item $\beta$ : contains all the parameters : $B_1$, $B_2$, $C_1$...
 \item $X$ : contains all the time varying features such as: $| \dot{\phi} | \dot{\phi} $ etc.
 \end{itemize}
+So the roll acceleration is put on the left hand side:
 \begin{equation}
 \begin{aligned}
 - \ddot{\phi} = B_{1A} \dot{\phi} + B_{2A} \left|{\dot{\phi}}\right| \dot{\phi} + B_{3A} \dot{\phi}^{3} + C_{1A} \phi + C_{3A} \phi^{3} \\ + C_{5A} \phi^{5}
 \end{aligned}
 \label{acceleration_equation_cubic}
 \end{equation}
+The equation for the acceleration
+Eq.\ref{eq:acceleration_equation_cubic} can now be rewritten as
+the linear regression in Eq.\ref{eq:ols}, where:
+$\displaystyle \beta = \left[\begin{matrix}B_{1A}\\B_{2A}\\B_{3A}\\C_{1A}\\C_{3A}\\C_{5A}\end{matrix}\right]$
 \begin{equation}
-y = B_{1A} x_{1} + B_{2A} x_{2} + B_{3A} x_{3} + C_{1A} x_{4} + C_{3A} x_{5} + C_{5A} x_{6}
-\label{acceleration_equation_cubic_x}
-\end{equation}\displaystyle \left[\begin{matrix}B_{1A} & B_{2A} & B_{3A} & C_{1A} & C_{3A} & C_{5A}\end{matrix}\right]$
-\begin{equation}
-\begin{aligned}
-\\ \left[\begin{matrix}x_{1}\\x_{2}\\x_{3}\\x_{4}\\x_{5}\\x_{6}\end{matrix}\right] = \left[\begin{matrix}\dot{\phi}\\\left|{\dot{\phi}}\right| \dot{\phi}\\\dot{\phi}^{3}\\\phi\\\phi^{3}\\\phi^{5}\end{matrix}\right]
-\end{aligned}
+X = \left[\begin{matrix}\dot{\phi} & \left|{\dot{\phi}}\right| \dot{\phi} & \dot{\phi}^{3} & \phi & \phi^{3} & \phi^{5}\end{matrix}\right]
 \label{eq_X}
 \end{equation}
 \begin{equation}
 y = - \ddot{\phi}
 \label{eq_y}
 \end{equation}
+The coefficients determined with Ordinary Least Square fit is shown in
+Tab.\ref{tab:parameters}. The mean value of these coefficients
+are presented togehter with 5\% confidence level intervalls.
 \begin{table}[H]
 \scriptsize
 \center
@@ -50,7 +52,7 @@ y = - \ddot{\phi}
 \label{tab:parameters}
 \begin{tabular}{|l|l|l|l|l|}
 \hline\addlinespace
-coeff & mean & pvals & conf_lower & conf_higher\\
+coeff & mean & P>|t| & $conf_{lower}$ & $conf_{higher}$\\
 B_1A & 0.016 & 0.0 & 0.014 & 0.018\\
 \hlineB_2A & -0.062 & 0.0 & -0.076 & -0.047\\
 B_3A & 0.098 & 0.0 & 0.072 & 0.124\\
@@ -62,33 +64,22 @@ C_5A & 254.093 & 0.0 & 244.923 & 263.264\\
 \end{table}
 \hypertarget{simulation}{%
 \subsection*{Simulation}\label{simulation}}
-\begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\begin{Verbatim}[commandchars=\\\{\}]
-<function \_lambdifygenerated(B\_1A, B\_2A, B\_3A, C\_1A, C\_3A, C\_5A, phi, phi1d)>
-\end{Verbatim}
-\end{tcolorbox}
+Fig.\ref{fig:sim_cubic} shows a simulation with the regressed
+parameters together with the original data from the FNPF simulations.
 \begin{figure}[H]
-\begin{center}\includegraphics[width = 0.95\textwidth]{figures/output_47_0.pdf}\end{center}
+\begin{center}\includegraphics[width = 0.95\textwidth]{figures/sim_cubic.pdf}\end{center}
 \vspace{-0.7cm}
-\caption{}
-\label{fig:}
+\caption{Simulation of roll decay test with parameters from the cubic model.}
+\label{fig:sim_cubic}
 \end{figure}
-\begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\begin{Verbatim}[commandchars=\\\{\}]
-<AxesSubplot:>
-\end{Verbatim}
-\end{tcolorbox}
-\begin{figure}[H]
-\begin{center}\includegraphics[width = 0.95\textwidth]{figures/output_48_1.pdf}\end{center}
-\vspace{-0.7cm}
-\caption{}
-\label{fig:}
-\end{figure}
-$\displaystyle x_{4}$
 \begin{equation}
-\left[\begin{matrix}x_{1}\\x_{4}\end{matrix}\right] = \left[\begin{matrix}\dot{\phi}\\\phi\end{matrix}\right]
-\label{eq_X2}
+- \ddot{\phi} = B_{1A} \dot{\phi} + C_{1A} \phi
+\label{Eq(-Derivative(phi(t), (t, 2)), B_1A*Derivative(phi(t), t) + C_1A*phi(t))}
 \end{equation}
+\begin{equation}
+X_{2} = \left[\begin{matrix}\dot{\phi} & \phi\end{matrix}\right]
+\label{eq_X2}
+\end{equation}\displaystyle \beta_{2} = \left[\begin{matrix}B_{1A}\\C_{1A}\end{matrix}\right]$
 \begin{table}[H]
 \scriptsize
 \center
@@ -96,16 +87,18 @@ $\displaystyle x_{4}$
 \label{tab:parameters}
 \begin{tabular}{|l|l|l|l|l|}
 \hline\addlinespace
-coeff & mean & pvals & conf_lower & conf_higher\\
+coeff & mean & P>|t| & $conf_{lower}$ & $conf_{higher}$\\
 B_1A & 0.007 & 0.0 & 0.007 & 0.007\\
 \hlineC_1A & 6.101 & 0.0 & 6.1 & 6.101\\
 \hline
 \end{tabular}
 \end{table}
-$\displaystyle - \frac{d^{2}}{d t^{2}} \phi{\left(t \right)} = B_{1A} \frac{d}{d t} \phi{\left(t \right)} + C_{1A} \phi{\left(t \right)}$
 \begin{figure}[H]
-\begin{center}\includegraphics[width = 0.95\textwidth]{figures/output_53_0.pdf}\end{center}
+\begin{center}\includegraphics[width = 0.95\textwidth]{figures/sim_linear.pdf}\end{center}
 \vspace{-0.7cm}
-\caption{}
-\label{fig:}
+\caption{Simulation of roll decay test with parameters from the linear model.}
+\label{fig:sim_linear}
 \end{figure}
+The coefficient of determination $R^2$ is very similar between the
+cubic (0.997) and the linear model (0.989), when comparing simulated
+roll signal with the corresponding data from FNPF.
