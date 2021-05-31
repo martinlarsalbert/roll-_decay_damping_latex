@@ -30,10 +30,15 @@ The roll decay equation can be expressed as a linear regression with
 \label{acceleration_equation_cubic}
 \end{equation}
 \begin{equation}
-y = B_{1A} x_{2} + B_{2A} x_{4} + B_{3A} x_{3} + C_{1A} x_{1} + C_{3A} x_{5} + C_{5A} x_{6}
+y = B_{1A} x_{1} + B_{2A} x_{2} + B_{3A} x_{3} + C_{1A} x_{4} + C_{3A} x_{5} + C_{5A} x_{6}
 \label{acceleration_equation_cubic_x}
-\end{equation}\displaystyle \left[\begin{matrix}C_{1A} & B_{1A} & B_{3A} & B_{2A} & C_{3A} & C_{5A}\end{matrix}\right]$
-$\displaystyle \left[\begin{matrix}x_{1}\\x_{2}\\x_{3}\\x_{4}\\x_{5}\\x_{6}\end{matrix}\right] = \left[\begin{matrix}\phi{\left(t \right)}\\\frac{d}{d t} \phi{\left(t \right)}\\\left(\frac{d}{d t} \phi{\left(t \right)}\right)^{3}\\\left|{\frac{d}{d t} \phi{\left(t \right)}}\right| \frac{d}{d t} \phi{\left(t \right)}\\\phi^{3}{\left(t \right)}\\\phi^{5}{\left(t \right)}\end{matrix}\right]$
+\end{equation}\displaystyle \left[\begin{matrix}B_{1A} & B_{2A} & B_{3A} & C_{1A} & C_{3A} & C_{5A}\end{matrix}\right]$
+\begin{equation}
+\begin{aligned}
+\\ \left[\begin{matrix}x_{1}\\x_{2}\\x_{3}\\x_{4}\\x_{5}\\x_{6}\end{matrix}\right] = \left[\begin{matrix}\dot{\phi}\\\left|{\dot{\phi}}\right| \dot{\phi}\\\dot{\phi}^{3}\\\phi\\\phi^{3}\\\phi^{5}\end{matrix}\right]
+\end{aligned}
+\label{eq_X}
+\end{equation}
 \begin{equation}
 y = - \ddot{\phi}
 \label{eq_y}
@@ -41,43 +46,66 @@ y = - \ddot{\phi}
 \begin{table}[H]
 \scriptsize
 \center
-\caption{Parameters estimation}
+\caption{Parameters estimation cubic model}
 \label{tab:parameters}
 \begin{tabular}{|l|l|l|l|l|}
 \hline\addlinespace
 coeff & mean & pvals & conf_lower & conf_higher\\
-C_1A & -6.116 & 0.0 & -6.118 & -6.114\\
-\hlineB_1A & -0.016 & 0.0 & -0.018 & -0.014\\
-B_3A & -0.098 & 0.0 & -0.124 & -0.072\\
-B_2A & 0.062 & 0.0 & 0.047 & 0.076\\
-C_3A & 5.522 & 0.0 & 5.236 & 5.807\\
-C_5A & -254.093 & 0.0 & -263.264 & -244.923\\
+B_1A & 0.016 & 0.0 & 0.014 & 0.018\\
+\hlineB_2A & -0.062 & 0.0 & -0.076 & -0.047\\
+B_3A & 0.098 & 0.0 & 0.072 & 0.124\\
+C_1A & 6.116 & 0.0 & 6.114 & 6.118\\
+C_3A & -5.522 & 0.0 & -5.807 & -5.236\\
+C_5A & 254.093 & 0.0 & 244.923 & 263.264\\
 \hline
 \end{tabular}
 \end{table}
+\hypertarget{simulation}{%
+\subsection*{Simulation}\label{simulation}}
+\begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\begin{Verbatim}[commandchars=\\\{\}]
+<function \_lambdifygenerated(B\_1A, B\_2A, B\_3A, C\_1A, C\_3A, C\_5A, phi, phi1d)>
+\end{Verbatim}
+\end{tcolorbox}
 \begin{figure}[H]
-\begin{center}\includegraphics[width = 0.95\textwidth]{figures/output_42_0.pdf}\end{center}
+\begin{center}\includegraphics[width = 0.95\textwidth]{figures/output_47_0.pdf}\end{center}
 \vspace{-0.7cm}
 \caption{}
 \label{fig:}
 \end{figure}
-$\displaystyle \left[\begin{matrix}x_{1}\\x_{2}\end{matrix}\right] = \left[\begin{matrix}\phi{\left(t \right)}\\\frac{d}{d t} \phi{\left(t \right)}\end{matrix}\right]$
+\begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\begin{Verbatim}[commandchars=\\\{\}]
+<AxesSubplot:>
+\end{Verbatim}
+\end{tcolorbox}
 \begin{figure}[H]
-\begin{center}\includegraphics[width = 0.95\textwidth]{figures/output_44_0.pdf}\end{center}
+\begin{center}\includegraphics[width = 0.95\textwidth]{figures/output_48_1.pdf}\end{center}
 \vspace{-0.7cm}
 \caption{}
 \label{fig:}
 \end{figure}
+$\displaystyle x_{4}$
+\begin{equation}
+\left[\begin{matrix}x_{1}\\x_{4}\end{matrix}\right] = \left[\begin{matrix}\dot{\phi}\\\phi\end{matrix}\right]
+\label{eq_X2}
+\end{equation}
 \begin{table}[H]
 \scriptsize
 \center
-\caption{Parameters estimation}
+\caption{Parameters estimation linear model}
 \label{tab:parameters}
 \begin{tabular}{|l|l|l|l|l|}
 \hline\addlinespace
 coeff & mean & pvals & conf_lower & conf_higher\\
-C_1A & -6.101 & 0.0 & -6.101 & -6.1\\
-\hlineB_1A & -0.007 & 0.0 & -0.007 & -0.007\\
+B_1A & 0.007 & 0.0 & 0.007 & 0.007\\
+\hlineC_1A & 6.101 & 0.0 & 6.1 & 6.101\\
 \hline
 \end{tabular}
 \end{table}
+$\displaystyle - \frac{d^{2}}{d t^{2}} \phi{\left(t \right)} = B_{1A} \frac{d}{d t} \phi{\left(t \right)} + C_{1A} \phi{\left(t \right)}$
+\begin{figure}[H]
+\begin{center}\includegraphics[width = 0.95\textwidth]{figures/output_53_0.pdf}\end{center}
+\vspace{-0.7cm}
+\caption{}
+\label{fig:}
+\end{figure}
