@@ -33,9 +33,12 @@ So the roll acceleration is put on the left hand side:
 The equation for the acceleration
 Eq.\ref{eq:acceleration_equation_cubic} can now be rewritten as
 the linear regression in Eq.\ref{eq:ols}, where:
-$\displaystyle \beta = \left[\begin{matrix}B_{1A}\\B_{2A}\\B_{3A}\\C_{1A}\\C_{3A}\\C_{5A}\end{matrix}\right]$
 \begin{equation}
-X = \left[\begin{matrix}\dot{\phi} & \left|{\dot{\phi}}\right| \dot{\phi} & \dot{\phi}^{3} & \phi & \phi^{3} & \phi^{5}\end{matrix}\right]
+\beta = \left[\begin{matrix}B_{3A}\\C_{3A}\\C_{5A}\\B_{2A}\\B_{1A}\\C_{1A}\end{matrix}\right]
+\label{eq_beta}
+\end{equation}
+\begin{equation}
+X = \left[\begin{matrix}\dot{\phi}^{3} & \phi^{3} & \phi^{5} & \left|{\dot{\phi}}\right| \dot{\phi} & \dot{\phi} & \phi\end{matrix}\right]
 \label{eq_X}
 \end{equation}
 \begin{equation}
@@ -49,16 +52,16 @@ are presented togehter with 5\% confidence level intervalls.
 \scriptsize
 \center
 \caption{Parameters estimation cubic model}
-\label{tab:parameters}
+\label{tab:parameters1}
 \begin{tabular}{|l|l|l|l|l|}
 \hline\addlinespace
 coeff & mean & P>|t| & $conf_{lower}$ & $conf_{higher}$\\
-B_1A & 0.016 & 0.0 & 0.014 & 0.018\\
-\hlineB_2A & -0.062 & 0.0 & -0.076 & -0.047\\
 B_3A & 0.098 & 0.0 & 0.072 & 0.124\\
-C_1A & 6.116 & 0.0 & 6.114 & 6.118\\
-C_3A & -5.522 & 0.0 & -5.807 & -5.236\\
+\hlineC_3A & -5.522 & 0.0 & -5.807 & -5.236\\
 C_5A & 254.093 & 0.0 & 244.923 & 263.264\\
+B_2A & -0.062 & 0.0 & -0.076 & -0.047\\
+B_1A & 0.016 & 0.0 & 0.014 & 0.018\\
+C_1A & 6.116 & 0.0 & 6.114 & 6.118\\
 \hline
 \end{tabular}
 \end{table}
@@ -77,14 +80,18 @@ parameters together with the original data from the FNPF simulations.
 \label{Eq(-Derivative(phi(t), (t, 2)), B_1A*Derivative(phi(t), t) + C_1A*phi(t))}
 \end{equation}
 \begin{equation}
-X_{2} = \left[\begin{matrix}\dot{\phi} & \phi\end{matrix}\right]
+\beta = \left[\begin{matrix}B_{1A}\\C_{1A}\end{matrix}\right]
+\label{eq_beta2}
+\end{equation}
+\begin{equation}
+X = \left[\begin{matrix}\dot{\phi} & \phi\end{matrix}\right]
 \label{eq_X2}
-\end{equation}\displaystyle \beta_{2} = \left[\begin{matrix}B_{1A}\\C_{1A}\end{matrix}\right]$
+\end{equation}
 \begin{table}[H]
 \scriptsize
 \center
 \caption{Parameters estimation linear model}
-\label{tab:parameters}
+\label{tab:parameters2}
 \begin{tabular}{|l|l|l|l|l|}
 \hline\addlinespace
 coeff & mean & P>|t| & $conf_{lower}$ & $conf_{higher}$\\
@@ -102,3 +109,95 @@ B_1A & 0.007 & 0.0 & 0.007 & 0.007\\
 The coefficient of determination $R^2$ is very similar between the
 cubic (0.997) and the linear model (0.989), when comparing simulated
 roll signal with the corresponding data from FNPF.
+\hypertarget{model-tests}{%
+\subsection*{Model tests}\label{model-tests}}
+Fig.\ref{fig:roll_decay_model_test} shows the roll signal from
+one of the roll decay model tests. A sample from this signal as
+indicated by the ``cut'' in Fig.\ref{fig:roll_decay_model_test}
+is used to regress the roll damping. The roll velocity and acceleration
+are however missing from this test data. This means that the regression
+approach as used for the FNPF data cannot be used directly. Instead the
+velocity and acceleration are first estimated using numerical gradient.
+The acceleration and velocity signals estimated in this way are very
+noisy as shown in Fig.\ref{fig:roll_velocity_and_acceleration},
+where the roll angle measurement noise is included in the gradients.
+Results from a regression with this noisy data is shown in
+Fig.\ref{fig:roll_acceleration_ols}, where the numerical
+acceleration and a 5\% confidence intervall is also shown.
+Fig.\ref{fig:roll_acceleration_residual} shows the distribution
+of the residual error.
+\begin{figure}[H]
+\begin{center}\includegraphics[width = 0.95\textwidth]{figures/roll_decay_model_test.pdf}\end{center}
+\vspace{-0.7cm}
+\caption{Roll decay model test}
+\label{fig:roll_decay_model_test}
+\end{figure}
+\begin{table}[H]
+\scriptsize
+\center
+\caption{Parameters estimation cubic model}
+\label{tab:parameters3}
+\begin{tabular}{|l|l|l|l|l|}
+\hline\addlinespace
+coeff & mean & P>|t| & $conf_{lower}$ & $conf_{higher}$\\
+B_3A & -0.262 & 0.958 & -10.069 & 9.544\\
+\hlineC_3A & 14.386 & 0.786 & -89.472 & 118.245\\
+C_5A & -382.877 & 0.829 & -3862.87 & 3097.115\\
+B_2A & 0.222 & 0.932 & -4.891 & 5.335\\
+B_1A & -0.006 & 0.985 & -0.622 & 0.61\\
+C_1A & 6.035 & 0.0 & 5.412 & 6.657\\
+\hline
+\end{tabular}
+\end{table}
+\begin{table}[H]
+\scriptsize
+\center
+\caption{Parameters estimation linear model}
+\label{tab:parameters4}
+\begin{tabular}{|l|l|l|l|l|}
+\hline\addlinespace
+coeff & mean & P>|t| & $conf_{lower}$ & $conf_{higher}$\\
+B_1A & 0.031 & 0.5 & -0.059 & 0.121\\
+\hlineC_1A & 6.127 & 0.0 & 5.905 & 6.349\\
+\hline
+\end{tabular}
+\end{table}
+\begin{figure}[H]
+\begin{center}\includegraphics[width = 0.95\textwidth]{figures/roll_acceleration_ols.pdf}\end{center}
+\vspace{-0.7cm}
+\caption{Roll acceleration from numerical gradient and OLS regression}
+\label{fig:roll_acceleration_ols}
+\end{figure}
+\begin{figure}[H]
+\begin{center}\includegraphics[width = 0.95\textwidth]{figures/roll_acceleration_residual.pdf}\end{center}
+\vspace{-0.7cm}
+\caption{Roll acceleration residual of linear model}
+\label{fig:roll_acceleration_residual}
+\end{figure}
+The coefficient of determination $R^2$ is slightly higher for the
+cubic model (0.971) compared to the the linear model (0.962), when
+comparing simulated roll signal with the corresponding data from the
+model test.
+\hypertarget{validation}{%
+\subsection*{Validation}\label{validation}}
+The other model test at 0 knots (see
+Fig.\ref{fig:other_roll_decay}) is used for validation of the
+regression models.
+\begin{figure}[H]
+\begin{center}\includegraphics[width = 0.95\textwidth]{figures/other_roll_decay.pdf}\end{center}
+\vspace{-0.7cm}
+\caption{The other roll decay model test at 0 knots}
+\label{fig:other_roll_decay}
+\end{figure}
+Fig.\ref{fig:other_roll_decay_sim} shows a comparison with this
+model test and simulations with regressed parameters from the first
+model test.
+\begin{figure}[H]
+\begin{center}\includegraphics[width = 0.95\textwidth]{figures/other_roll_decay_sim.pdf}\end{center}
+\vspace{-0.7cm}
+\caption{The other roll decay model test compared with corresponding simulations with linear and cubic models regressed from the first model test.}
+\label{fig:other_roll_decay_sim}
+\end{figure}
+The coefficient of determination $R^2$ is slightly lower for the cubic
+model (0.98) compared to the the linear model (0.982), when comparing
+simulated roll signal with the corresponding data from the model test.
