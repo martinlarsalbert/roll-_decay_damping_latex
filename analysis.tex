@@ -8,7 +8,7 @@ of the model can be estimated using Ordinary Least Square method (OLS),
 solving the following regression:
 \begin{equation}
 y = X \cdot \beta + \epsilon
-\label{ols}
+\label{eq:ols}
 \end{equation}
 where:
 \begin{itemize}
@@ -27,22 +27,22 @@ So the roll acceleration is put on the left hand side:
 \begin{aligned}
 - \ddot{\phi} = B_{1A} \dot{\phi} + B_{2A} \left|{\dot{\phi}}\right| \dot{\phi} + B_{3A} \dot{\phi}^{3} + C_{1A} \phi + C_{3A} \phi^{3} \\ + C_{5A} \phi^{5}
 \end{aligned}
-\label{acceleration_equation_cubic}
+\label{eq:acceleration_equation_cubic}
 \end{equation}
 The equation for the acceleration
 Eq.\ref{eq:acceleration_equation_cubic} can now be rewritten as
 the linear regression in Eq.\ref{eq:ols}, where:
 \begin{equation}
 \beta = \left[\begin{matrix}B_{3A}\\C_{3A}\\C_{5A}\\B_{2A}\\B_{1A}\\C_{1A}\end{matrix}\right]
-\label{eq_beta}
+\label{eq:eq_beta}
 \end{equation}
 \begin{equation}
 X = \left[\begin{matrix}\dot{\phi}^{3} & \phi^{3} & \phi^{5} & \left|{\dot{\phi}}\right| \dot{\phi} & \dot{\phi} & \phi\end{matrix}\right]
-\label{eq_X}
+\label{eq:eq_X}
 \end{equation}
 \begin{equation}
 y = - \ddot{\phi}
-\label{eq_y}
+\label{eq:eq_y}
 \end{equation}
 The coefficients determined with Ordinary Least Square fit is shown in
 Tab.\ref{tab:parameters}. The mean value of these coefficients
@@ -75,15 +75,15 @@ parameters together with the original data from the FNPF simulations.
 \end{figure}
 \begin{equation}
 - \ddot{\phi} = B_{1A} \dot{\phi} + C_{1A} \phi
-\label{Eq(-Derivative(phi(t), (t, 2)), B_1A*Derivative(phi(t), t) + C_1A*phi(t))}
+\label{eq:Eq(-Derivative(phi(t), (t, 2)), B_1A*Derivative(phi(t), t) + C_1A*phi(t))}
 \end{equation}
 \begin{equation}
 \beta = \left[\begin{matrix}B_{1A}\\C_{1A}\end{matrix}\right]
-\label{eq_beta2}
+\label{eq:eq_beta2}
 \end{equation}
 \begin{equation}
 X = \left[\begin{matrix}\dot{\phi} & \phi\end{matrix}\right]
-\label{eq_X2}
+\label{eq:eq_X2}
 \end{equation}
 \begin{table}[H]
 \scriptsize
