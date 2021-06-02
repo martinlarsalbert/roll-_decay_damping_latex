@@ -58,12 +58,12 @@ intervalls.
 \hline\addlinespace
 coeff & mean & $P_{value}$ & $conf_{lower}$ & $conf_{higher}$\\
 &  &  &  & \\
-\hline$B_{3A}$ & 0.098 & 0.0 & 0.072 & 0.124\\
+\hline$B_{1A}$ & 0.016 & 0.0 & 0.014 & 0.018\\
+$B_{2A}$ & -0.062 & 0.0 & -0.076 & -0.047\\
+$B_{3A}$ & 0.098 & 0.0 & 0.072 & 0.124\\
+$C_{1A}$ & 6.116 & 0.0 & 6.114 & 6.118\\
 $C_{3A}$ & -5.522 & 0.0 & -5.807 & -5.236\\
 $C_{5A}$ & 254.093 & 0.0 & 244.923 & 263.264\\
-$B_{2A}$ & -0.062 & 0.0 & -0.076 & -0.047\\
-$B_{1A}$ & 0.016 & 0.0 & 0.014 & 0.018\\
-$C_{1A}$ & 6.116 & 0.0 & 6.114 & 6.118\\
 \hline
 \end{tabular}
 \end{table}
@@ -85,12 +85,11 @@ for each parameter. $H_0$ tests the probability that a certain
 parameter would be 0 (so that it can be removed). For this case the
 $P_{value}$ is close to 0 for all parameters, which means that none of
 them should be removed.
-It can however be noted that the lower and upper limits of the
-\textbackslash5\% confidence intervalls differs quite a bit. In the
-following, a simpler linear model will therefore also be investigated,
-to see if there is a need to reduce the complexity of this model. For a
-linear model, the differential equation for the roll motions is reduced
-to:
+It can however be noted that the lower and upper limits of the 5\%
+confidence intervalls differs quite a bit. In the following, a simpler
+linear model will therefore also be investigated, to see if there is a
+need to reduce the complexity of this model. For a linear model, the
+differential equation for the roll motions is reduced to:
 \begin{equation}
 - \ddot{\phi} = B_{1A} \dot{\phi} + C_{1A} \phi
 \label{eq:Eq(-Derivative(phi(t), (t, 2)), B_1A*Derivative(phi(t), t) + C_1A*phi(t))}
@@ -164,6 +163,12 @@ Fig.\ref{fig:residual_normal_probability_plot}.
 \caption{Roll decay model test}
 \label{fig:roll_decay_model_test}
 \end{figure}
+\begin{figure}[H]
+\begin{center}\includegraphics[width = 0.95\textwidth]{figures/roll_velocity_and_acceleration.pdf}\end{center}
+\vspace{-0.7cm}
+\caption{Numerical gradient of roll velocity and acceleration}
+\label{fig:roll_velocity_and_acceleration}
+\end{figure}
 \begin{table}[H]
 \scriptsize
 \center
@@ -173,12 +178,12 @@ Fig.\ref{fig:residual_normal_probability_plot}.
 \hline\addlinespace
 coeff & mean & $P_{value}$ & $conf_{lower}$ & $conf_{higher}$\\
 &  &  &  & \\
-\hline$B_{3A}$ & -0.133 & 0.918 & -2.65 & 2.385\\
+\hline$B_{1A}$ & 0.009 & 0.913 & -0.149 & 0.166\\
+$B_{2A}$ & 0.132 & 0.843 & -1.177 & 1.441\\
+$B_{3A}$ & -0.133 & 0.918 & -2.65 & 2.385\\
+$C_{1A}$ & 6.046 & 0.0 & 5.887 & 6.205\\
 $C_{3A}$ & 7.441 & 0.583 & -19.155 & 34.037\\
 $C_{5A}$ & -88.159 & 0.847 & -981.645 & 805.328\\
-$B_{2A}$ & 0.132 & 0.843 & -1.177 & 1.441\\
-$B_{1A}$ & 0.009 & 0.913 & -0.149 & 0.166\\
-$C_{1A}$ & 6.046 & 0.0 & 5.887 & 6.205\\
 \hline
 \end{tabular}
 \end{table}
